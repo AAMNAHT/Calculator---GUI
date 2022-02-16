@@ -1,0 +1,118 @@
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author user
+ */
+public class GUI {
+ 
+    JFrame fr;
+    JButton[] btnArr;
+    JTextField tfMain,tfSub;
+    JPanel panBtn,panTf;
+    BtnHandler hnd;
+    
+    public GUI() {
+        initGUI();
+    }
+    public void initGUI()
+    {
+        String[] btnText = {"^","^2","del","C","MC","M+","M-","/","7","8","9","*","4","5","6","-","1","2","3","+","1/x","0",".","="};
+        
+        //making frame
+        fr = new JFrame("Calculator");
+        fr.setLayout(new BorderLayout());
+        
+        //panel  - buttons
+        panBtn = new JPanel();
+        panBtn.setPreferredSize(new Dimension(950,350));
+        panBtn.setLayout(new GridLayout(6,7));
+        
+        //initializing - btnhandler
+        hnd = new BtnHandler(this);
+        
+        //making panel for text fields
+        panTf = new JPanel();
+        panTf.setPreferredSize(new Dimension(100,100));
+        panTf.setLayout(new GridLayout(2,2));
+        
+        tfMain = new JTextField(20);
+        tfMain.setBorder(null);
+        tfMain.setEditable(false);
+        tfMain.setFont(new Font("Verdena",Font.BOLD,20));
+        tfMain.setBackground(Color.WHITE);
+        
+        tfSub = new JTextField(20);
+        tfSub.setBorder(null);
+        tfSub.setEditable(false);
+        tfSub.setFont(new Font("Verdena",Font.BOLD,20));
+        tfSub.setBackground(Color.WHITE);
+        panTf.add(tfMain);
+        panTf.add(tfSub);
+        
+        int btnCount=24;
+        btnArr = new JButton[btnCount];
+        
+        for (int i = 0; i < btnCount; i++) {
+            btnArr[i] = new JButton();
+           btnArr[i].setText(btnText[i]);
+           btnArr[i].setFont(new Font("Verdena",Font.BOLD,20));
+           btnArr[i].setActionCommand(btnText[i]);
+           btnArr[i].addActionListener(hnd);
+           if(btnArr[i].getText()=="MC"||btnArr[i].getText()=="M+"||btnArr[i].getText()=="M-"||btnArr[i].getText()=="MR")
+           {
+                btnArr[i].setBackground(Color.ORANGE);
+           }
+           else if(btnArr[i].getText()=="=")
+           {
+                btnArr[i].setBackground(Color.GREEN);
+           }
+           else if(btnArr[i].getText()=="del"||btnArr[i].getText()=="C")
+           {
+                btnArr[i].setBackground(Color.YELLOW);
+           }
+           else if(btnArr[i].getText()=="^2"||btnArr[i].getText()=="^"||btnArr[i].getText()=="/"||btnArr[i].getText()=="*"||btnArr[i].getText()=="-"||btnArr[i].getText()=="+")
+           {
+                btnArr[i].setBackground(Color.LIGHT_GRAY);
+           }
+           else
+           {
+               btnArr[i].setBackground(Color.WHITE);
+           }
+           btnArr[i].setPreferredSize(new Dimension(10,10));
+           panBtn.add(btnArr[i]);
+        }
+        
+        tfMain.setHorizontalAlignment(JTextField.RIGHT);
+        
+        //adding in frame
+        fr.add(panTf,BorderLayout.NORTH);
+        fr.add(panBtn,BorderLayout.CENTER);
+        
+       
+        fr.setSize(500,500);
+      
+        fr.setLocation(200,200);
+        fr.setLocationRelativeTo(null);
+        fr.setResizable(false);
+        fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //fr.pack();
+        fr.setVisible(true); 
+    }
+}
+   
